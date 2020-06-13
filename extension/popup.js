@@ -43,12 +43,16 @@ function ui_setTrackerList(data) {
     element.innerHTML = htmlList.join("\n");
 }
 
-function onSegmentedControl(e) {
-
+function onSegmentedControl(event) {
+    const element = event.target;
+    console.log(element.id)
 }
 
-
 window.addEventListener('load', function () {
-    console.log("On load")
+    console.log("On Window load");
     onAppear()
+    for (var i = 1; i < 4; i++) {
+        var tab = document.getElementById(`tab${i}`);
+        tab.addEventListener("click", onSegmentedControl)
+    }
 })

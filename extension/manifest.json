@@ -12,7 +12,7 @@
     "storage"
   ],
   "background": {
-    "scripts": ["background.js", "libs/psl.min.js"],
+    "scripts": ["libs/psl.min.js", "libs/adblocker.umd.min.js", "background.js"],
     "persistent": true
   },
   "browser_action": {
