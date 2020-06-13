@@ -1,0 +1,22 @@
+{
+  "manifest_version": 2,
+  "name": "ONOS Tracker Info",
+  "short_name": "ONOSTrackInfo",
+  "version": "1.0.0",
+  "permissions": [
+    "activeTab",
+    "tabs",
+    "webRequest",
+    "http://*/*",
+    "https://*/*",
+    "storage"
+  ],
+  "background": {
+    "scripts": ["background.js", "libs/psl.min.js"],
+    "persistent": true
+  },
+  "browser_action": {
+    "default_popup": "popup.html",
+    "default_icon": "images/icon.png"
+  }
+}
