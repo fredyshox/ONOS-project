@@ -16,7 +16,8 @@ function isAdOrTracker(url) {
 }
 
 // evaluate source-dest pair, and update state
-function evalRequest(sourceDomain, destDomain) {
+function evalRequest(sourceHostname, destHostname) {
+    const sourceDomain = psl.get(sourceHostname);
     const sourceKey = websiteKey(sourceDomain);
     var query = {}
     query[sourceKey] = []
@@ -30,16 +31,16 @@ function evalRequest(sourceDomain, destDomain) {
             resultSet = new Set(result[sourceKey])
         }
 
-        if (!resultSet.has(destDomain)) {
+        if (!resultSet.has(destHostname)) {
             // update domains
-            resultSet.add(destDomain)
+            resultSet.add(destHostname)
             // change key
             result[sourceKey] = Array.from(resultSet)
             // update storage
             chrome.storage.local.set(result, function () {
                 console.log("Request saved");
             })
-            evalDestination(destDomain);
+            evalDestination(destHostname);
         }
 
         if (siteCount != uniqueSites) {
@@ -61,7 +62,8 @@ function updateSiteCount(count) {
 }
 
 // evaluate destination
-function evalDestination(destDomain) {
+function evalDestination(destHostname) {
+    const destDomain = psl.get(destHostname);
     const destKey = trackerKey(destDomain);
     var query = {}
     query[destKey] = {}
@@ -71,9 +73,9 @@ function evalDestination(destDomain) {
         if (Object.keys(obj).length === 0) {
             console.log("Initial object")
             obj["visit_count"] = 1;
-            if (domainDatabase[destDomain]) {
-                obj["global_site_reach"] = domainDatabase[destDomain]["site_reach"];
-                obj["owner"] = domainDatabase[destDomain]["owner"];
+            if (domainDatabase[destHostname]) {
+                obj["global_site_reach"] = domainDatabase[destHostname]["site_reach"];
+                obj["owner"] = domainDatabase[destHostname]["owner"];
             } else {
                 obj["global_site_reach"] = "N/A"
                 obj["owner"] = "Unknown";
@@ -136,10 +138,11 @@ chrome.webRequest.onBeforeRequest.addListener(function (details) {
         const destUrl = details.url;
         console.log(`Request: ${sourceUrl} => ${destUrl}`);
         if (sourceUrl && isAdOrTracker(destUrl)) {
-            const sourceDomain = (new URL(sourceUrl)).hostname;
-            const destDomain = (new URL(destUrl)).hostname;
-            if (sourceDomain != destDomain) {
-                evalRequest(sourceDomain, destDomain);
+            const sourceHostname = (new URL(sourceUrl)).hostname;
+            const destHostname = (new URL(destUrl)).hostname;
+            console.log(sourceHostname, destHostname);
+            if (sourceHostname != destHostname) {
+                evalRequest(sourceHostname, destHostname);
             }
         }
     } catch (e) {

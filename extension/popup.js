@@ -6,14 +6,16 @@ function onAppear() {
         const activeTab = tabs[0]
         const urlString = activeTab.pendingUrl || activeTab.url;
         // parse domain 
-        const url = new URL(urlString);
-        console.log(`Current domain ${url.hostname}`)
-        ui_setCurrentHostname(url.hostname);
-        fetchWebsiteData(url.hostname, function (arr) {
+        const hostname = (new URL(urlString)).hostname;
+        const domain = psl.get(hostname);
+        console.log(`Current hostname ${hostname}, domain name: ${domain}`)
+        ui_setCurrentDomain(domain);
+        fetchWebsiteData(domain, function (arr) {
             ui_setTrackerCount(arr.length);
             arr.forEach(function (item) {
-                fetchTrackerData(item, function (data) {
-                    data.domain = item;
+                const domain = psl.get(item);
+                fetchTrackerData(domain, function (data) {
+                    data.domain = domain;
                     currentDomainData.push(data);
                     console.log(`Tracker data: ${JSON.stringify(data)}`);
                     currentDomainData = sortDomainData(currentDomainData, selectedStatIndex);
@@ -76,9 +78,9 @@ function sortDomainData(data, statIndex) {
     return data;
 }
 
-function ui_setCurrentHostname(hostname) {
+function ui_setCurrentDomain(domain) {
     var element = document.getElementById("header-label");
-    element.innerHTML = hostname;
+    element.innerHTML = domain;
 }
 
 function ui_setTrackerCount(count) {
