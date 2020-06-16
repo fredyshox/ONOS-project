@@ -1,0 +1,6 @@
+tldextract~=2.2.2
+adblockparser~=0.7
+networkx~=2.4
+numpy~=1.18.3
+pandas~=1.0.3
+matplotlib

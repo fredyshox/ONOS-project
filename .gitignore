@@ -1,2 +1,5 @@
 .DS_Store
 analysis/.ipynb_checkpoints/
+*.log
+*.sqlite
+aggregation/.ipynb_checkpoints/

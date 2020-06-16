@@ -1,0 +1,3 @@
+[submodule "aggregation/OpenWPM"]
+	path = aggregation/OpenWPM
+	url = git@github.com:mozilla/OpenWPM.git
