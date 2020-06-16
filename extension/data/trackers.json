@@ -1,0 +1,302 @@
+{
+    "cx.atdmt.com": {
+        "owner": "Facebook",
+        "count": 14,
+        "site_reach": 0.17721518987341772
+    },
+    "cm.g.doubleclick.net": {
+        "owner": "Google",
+        "count": 41,
+        "site_reach": 0.5189873417721519
+    },
+    "stats.g.doubleclick.net": {
+        "owner": "Google",
+        "count": 65,
+        "site_reach": 0.8227848101265823
+    },
+    "pagead2.googlesyndication.com": {
+        "owner": "Google",
+        "count": 35,
+        "site_reach": 0.4430379746835443
+    },
+    "securepubads.g.doubleclick.net": {
+        "owner": "Google",
+        "count": 38,
+        "site_reach": 0.4810126582278481
+    },
+    "csi.gstatic.com": {
+        "owner": "Google",
+        "count": 9,
+        "site_reach": 0.11392405063291139
+    },
+    "js-agent.newrelic.com": {
+        "owner": "New Relic",
+        "count": 9,
+        "site_reach": 0.11392405063291139
+    },
+    "top-fwz1.mail.ru": {
+        "owner": "Mail.Ru",
+        "count": 1,
+        "site_reach": 0.012658227848101266
+    },
+    "ib.adnxs.com": {
+        "owner": "AppNexus",
+        "count": 29,
+        "site_reach": 0.3670886075949367
+    },
+    "match.adsby.bidtheatre.com": {
+        "owner": "Unknown",
+        "count": 7,
+        "site_reach": 0.08860759493670886
+    },
+    "pixel.yabidos.com": {
+        "owner": "Unknown",
+        "count": 2,
+        "site_reach": 0.02531645569620253
+    },
+    "pubads.g.doubleclick.net": {
+        "owner": "Google",
+        "count": 5,
+        "site_reach": 0.06329113924050633
+    },
+    "d1.abtshield.com": {
+        "owner": "Unknown",
+        "count": 4,
+        "site_reach": 0.05063291139240506
+    },
+    "iwa3.hit.interia.pl": {
+        "owner": "home.pl",
+        "count": 1,
+        "site_reach": 0.012658227848101266
+    },
+    "iwa.iplsc.com": {
+        "owner": "home.pl",
+        "count": 1,
+        "site_reach": 0.012658227848101266
+    },
+    "dsg.interia.pl": {
+        "owner": "home.pl",
+        "count": 1,
+        "site_reach": 0.012658227848101266
+    },
+    "prebid-eu.creativecdn.com": {
+        "owner": "RTB House",
+        "count": 9,
+        "site_reach": 0.11392405063291139
+    },
+    "iwa.hit.interia.pl": {
+        "owner": "home.pl",
+        "count": 1,
+        "site_reach": 0.012658227848101266
+    },
+    "iwa3.hit.interia.pl:8443": {
+        "owner": "home.pl",
+        "count": 1,
+        "site_reach": 0.012658227848101266
+    },
+    "cmp.dreamlab.pl": {
+        "owner": "Onet",
+        "count": 6,
+        "site_reach": 0.0759493670886076
+    },
+    "csr.onet.pl": {
+        "owner": "Onet",
+        "count": 7,
+        "site_reach": 0.08860759493670886
+    },
+    "tagger.opecloud.com": {
+        "owner": "Unknown",
+        "count": 5,
+        "site_reach": 0.06329113924050633
+    },
+    "profiles.tagger.opecloud.com": {
+        "owner": "Unknown",
+        "count": 5,
+        "site_reach": 0.06329113924050633
+    },
+    "sgqcvfjvr.onet.pl": {
+        "owner": "Onet",
+        "count": 6,
+        "site_reach": 0.0759493670886076
+    },
+    "events.ocdn.eu": {
+        "owner": "Ringier Axel Springer Polska",
+        "count": 6,
+        "site_reach": 0.0759493670886076
+    },
+    "analytics.twitter.com": {
+        "owner": "Twitter",
+        "count": 4,
+        "site_reach": 0.05063291139240506
+    },
+    "px.owneriq.net": {
+        "owner": "Inmar",
+        "count": 3,
+        "site_reach": 0.0379746835443038
+    },
+    "cms.analytics.yahoo.com": {
+        "owner": "Verizon Media",
+        "count": 1,
+        "site_reach": 0.012658227848101266
+    },
+    "pixel6.wp.pl": {
+        "owner": "Wirtualna Polska",
+        "count": 3,
+        "site_reach": 0.0379746835443038
+    },
+    "logx.optimizely.com": {
+        "owner": "Optimizely",
+        "count": 1,
+        "site_reach": 0.012658227848101266
+    },
+    "tracking.olx-st.com": {
+        "owner": "OLX Group",
+        "count": 3,
+        "site_reach": 0.0379746835443038
+    },
+    "alb.reddit.com": {
+        "owner": "Reddit",
+        "count": 1,
+        "site_reach": 0.012658227848101266
+    },
+    "gateway.reddit.com": {
+        "owner": "Reddit",
+        "count": 1,
+        "site_reach": 0.012658227848101266
+    },
+    "ads.yahoo.com": {
+        "owner": "Verizon Media",
+        "count": 9,
+        "site_reach": 0.11392405063291139
+    },
+    "cookiex.ngd.yahoo.com": {
+        "owner": "Verizon Media",
+        "count": 4,
+        "site_reach": 0.05063291139240506
+    },
+    "client-event-reporter.twitch.tv": {
+        "owner": "Amazon.com",
+        "count": 1,
+        "site_reach": 0.012658227848101266
+    },
+    "ups.analytics.yahoo.com": {
+        "owner": "Verizon Media",
+        "count": 3,
+        "site_reach": 0.0379746835443038
+    },
+    "an.yandex.ru": {
+        "owner": "Yandex",
+        "count": 2,
+        "site_reach": 0.02531645569620253
+    },
+    "dot.wp.pl": {
+        "owner": "Wirtualna Polska",
+        "count": 5,
+        "site_reach": 0.06329113924050633
+    },
+    "bid.g.doubleclick.net": {
+        "owner": "Google",
+        "count": 2,
+        "site_reach": 0.02531645569620253
+    },
+    "mc.yandex.ru": {
+        "owner": "Yandex",
+        "count": 4,
+        "site_reach": 0.05063291139240506
+    },
+    "ce.lijit.com": {
+        "owner": "Sovrn Holdings",
+        "count": 3,
+        "site_reach": 0.0379746835443038
+    },
+    "p.gazeta.pl": {
+        "owner": "AGORA",
+        "count": 2,
+        "site_reach": 0.02531645569620253
+    },
+    "eu.groupondata.com": {
+        "owner": "Groupon",
+        "count": 1,
+        "site_reach": 0.012658227848101266
+    },
+    "px.wp.pl": {
+        "owner": "Wirtualna Polska",
+        "count": 4,
+        "site_reach": 0.05063291139240506
+    },
+    "beacon.nrholding.net": {
+        "owner": "Internet Mall",
+        "count": 1,
+        "site_reach": 0.012658227848101266
+    },
+    "profile.ssp.rambler.ru": {
+        "owner": "Rambler Internet Holding",
+        "count": 1,
+        "site_reach": 0.012658227848101266
+    },
+    "api-analytics.topankovo.sk": {
+        "owner": "Unknown",
+        "count": 1,
+        "site_reach": 0.012658227848101266
+    },
+    "api-analytics.pelikan.sk": {
+        "owner": "Unknown",
+        "count": 1,
+        "site_reach": 0.012658227848101266
+    },
+    "pixel.wp.pl": {
+        "owner": "Wirtualna Polska",
+        "count": 1,
+        "site_reach": 0.012658227848101266
+    },
+    "slipstream.skyscanner.net": {
+        "owner": "Skyscanner",
+        "count": 1,
+        "site_reach": 0.012658227848101266
+    },
+    "p.travelsmarter.net": {
+        "owner": "TripAdvisor",
+        "count": 1,
+        "site_reach": 0.012658227848101266
+    },
+    "pixel-a.basis.net": {
+        "owner": "Centro",
+        "count": 1,
+        "site_reach": 0.012658227848101266
+    },
+    "bat.bing.com": {
+        "owner": "Microsoft",
+        "count": 3,
+        "site_reach": 0.0379746835443038
+    },
+    "c.paypal.com": {
+        "owner": "PayPal",
+        "count": 1,
+        "site_reach": 0.012658227848101266
+    },
+    "t.paypal.com": {
+        "owner": "PayPal",
+        "count": 1,
+        "site_reach": 0.012658227848101266
+    },
+    "ct.pinterest.com": {
+        "owner": "Pinterest",
+        "count": 1,
+        "site_reach": 0.012658227848101266
+    },
+    "pixel.wp.com": {
+        "owner": "Automattic",
+        "count": 1,
+        "site_reach": 0.012658227848101266
+    },
+    "t.indeed.com": {
+        "owner": "Indeed",
+        "count": 1,
+        "site_reach": 0.012658227848101266
+    },
+    "events.yourcx.io": {
+        "owner": "YourCX",
+        "count": 3,
+        "site_reach": 0.0379746835443038
+    }
+}

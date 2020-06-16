@@ -1,4 +1,5 @@
-var currentDomainData = []
+var currentDomainData = [];
+var selectedStatIndex = 0;
 
 function onAppear() {
     chrome.tabs.query({ active: true, currentWindow: true}, function (tabs) {
@@ -8,21 +9,71 @@ function onAppear() {
         const url = new URL(urlString);
         console.log(`Current domain ${url.hostname}`)
         ui_setCurrentHostname(url.hostname);
-        fetchData(url.hostname, function (data) {
-            currentDomainData = data;
-            ui_setTrackerCount(data.length);
-            ui_setTrackerList(data);
+        fetchWebsiteData(url.hostname, function (arr) {
+            ui_setTrackerCount(arr.length);
+            arr.forEach(function (item) {
+                fetchTrackerData(item, function (data) {
+                    data.domain = item;
+                    currentDomainData.push(data);
+                    console.log(`Tracker data: ${JSON.stringify(data)}`);
+                    currentDomainData = sortDomainData(currentDomainData, selectedStatIndex);
+                    ui_displayStats(currentDomainData, selectedStatIndex);
+                });
+            });
         })
     });
 }
 
-function fetchData(domain, callback) {
-    var defaultKey = {}
-    defaultKey[domain] = []
-    chrome.storage.local.get(defaultKey, function (result) {
-        const data = result[domain];
+function fetchWebsiteData(domain, callback) {
+    const key = websiteKey(domain);
+    const query = websiteQuery(domain);
+    chrome.storage.local.get(query, function (result) {
+        const trackers = result[key];
+        callback(trackers);
+    });
+}
+
+function fetchTrackerData(domain, callback) {
+    const key = trackerKey(domain);
+    const query = trackerQuery(domain);
+    chrome.storage.local.get(query, function (result) {
+        const data = result[key];
         callback(data);
     });
+}
+
+function sortDomainData(data, statIndex) {
+    if (statIndex == 0) {
+        data.sort(function (a, b) {
+            const aOnwer = a["owner"];
+            const bOwner = b["owner"];
+            console.log(aOnwer, bOwner);
+            if (aOnwer === "Unknown") {
+                return 1;
+            } else if (bOwner === "Unknown") {
+                return -1;
+            }
+
+            return aOnwer > bOwner ? 1 : -1;
+        })
+    } else if (statIndex == 1) {
+        data.sort(function (a, b) {
+            const aGR = a["global_site_reach"];
+            const bGR = b["global_site_reach"];
+            if (aGR === "N/A") {
+                return 1;
+            } else if (bGR == "N/A") {
+                return -1;
+            }
+
+            return aGR > bGR ? -1 : 1;
+        });
+    } else {
+        data.sort(function (a, b) {
+            return a["visit_count"] > b["visit_count"] ? -1 : 1;
+        })
+    }
+    return data;
 }
 
 function ui_setCurrentHostname(hostname) {
@@ -35,23 +86,64 @@ function ui_setTrackerCount(count) {
     element.innerHTML = count;
 }
 
-function ui_setTrackerList(data) {
+function ui_displayStats(data, statIndex) {
+    if (statIndex == 0) {
+        // Owner
+        ui_setTrackerList(data, "owner");
+    } else if (statIndex == 1) {
+        // Reach
+        ui_setTrackerList(data, "global_site_reach", ui_reachLabel);
+    } else {
+        // Count 
+        ui_setTrackerList(data, "visit_count");
+    }
+}
+
+function ui_setTrackerList(data, itemKey, processingCb) {
     var htmlList = data.map(function (item) {
-        return `<li class="list-group-item py-1"><small>${item}</small></li>`
+        var value = item[itemKey];
+        if (processingCb) {
+            value = processingCb(value);
+        }
+        return `<li class="list-group-item d-flex justify-content-between py-1">
+        <small>${item["domain"]}</small>
+        <span class="badge badge-dark badge-pill">${value}</span>
+        </li>`
     })
     var element = document.getElementById("stat-list");
     element.innerHTML = htmlList.join("\n");
 }
 
+function ui_reachLabel(reach) {
+    if (typeof(reach) == "number") {
+        return reach.toFixed(3);
+    } else {
+        return reach;
+    }
+}
+
 function onSegmentedControl(event) {
     const element = event.target;
-    console.log(element.id)
+    const index = element.id.slice(-1);
+    selectedStatIndex = parseInt(index);
+    for (var i = 0; i < 3; i++) {
+        var descElement = document.getElementById("stat-desc" + i);
+        if (i == index) {
+            descElement.className = "";
+        } else {
+            descElement.className = "d-none";
+        }
+    }
+
+    console.log(`Clicked: ${element.id}`);
+    currentDomainData = sortDomainData(currentDomainData, selectedStatIndex);
+    ui_displayStats(currentDomainData, selectedStatIndex);
 }
 
 window.addEventListener('load', function () {
     console.log("On Window load");
     onAppear()
-    for (var i = 1; i < 4; i++) {
+    for (var i = 0; i < 3; i++) {
         var tab = document.getElementById(`tab${i}`);
         tab.addEventListener("click", onSegmentedControl)
     }

@@ -1,9 +1,10 @@
 // Constants
-const DB_PATH = "data/myfile.json"
+const DB_PATH = "data/trackers.json"
 
 // Global state
 var domainDatabase = null;
-var adblockEngine = null
+var adblockEngine = null;
+var uniqueSites = 0;
 
 // Check if request to url, can be considered as tracker/ad
 function isAdOrTracker(url) {
@@ -16,22 +17,78 @@ function isAdOrTracker(url) {
 
 // evaluate source-dest pair, and update state
 function evalRequest(sourceDomain, destDomain) {
-    var defaultKey = {}
-    defaultKey[sourceDomain] = []
-    chrome.storage.local.get(defaultKey, function (result) {
-        var resultSet = new Set(result[sourceDomain])
+    const sourceKey = websiteKey(sourceDomain);
+    var query = {}
+    query[sourceKey] = []
+    chrome.storage.local.get(query, function (result) {
+        var resultSet = null;
+        var siteCount = uniqueSites;
+        if (!result[sourceKey]) {
+            siteCount += 1;
+            resultSet = new Set();
+        } else {
+            resultSet = new Set(result[sourceKey])
+        }
+
         if (!resultSet.has(destDomain)) {
             // update domains
             resultSet.add(destDomain)
             // change key
-            var key = {}
-            key[sourceDomain] = Array.from(resultSet)
+            result[sourceKey] = Array.from(resultSet)
             // update storage
-            chrome.storage.local.set(key, function () {
+            chrome.storage.local.set(result, function () {
                 console.log("Request saved");
             })
+            evalDestination(destDomain);
         }
-        console.log(`Set size: ${resultSet.size}`)
+
+        if (siteCount != uniqueSites) {
+            updateSiteCount(siteCount);
+        }
+
+        console.log(`Set size for ${sourceDomain}: ${resultSet.size}`)
+    })
+}
+
+// update number of visited sites(per domain)
+function updateSiteCount(count) {
+    uniqueSites = count;
+    var key = {};
+    key[COUNT_KEY] = uniqueSites;
+    chrome.storage.local.set(key, function () {
+        console.log("Unique site count updated");
+    })
+}
+
+// evaluate destination
+function evalDestination(destDomain) {
+    const destKey = trackerKey(destDomain);
+    var query = {}
+    query[destKey] = {}
+    chrome.storage.local.get(query, function (result) {
+        var obj = result[destKey];
+        console.log(`INITIAL OBJECT: ${JSON.stringify(obj)}`)
+        if (Object.keys(obj).length === 0) {
+            console.log("Initial object")
+            obj["visit_count"] = 1;
+            if (domainDatabase[destDomain]) {
+                obj["global_site_reach"] = domainDatabase[destDomain]["site_reach"];
+                obj["owner"] = domainDatabase[destDomain]["owner"];
+            } else {
+                obj["global_site_reach"] = "N/A"
+                obj["owner"] = "Unknown";
+            }
+        } else {
+            console.log("Other obejct")
+            obj["visit_count"] = obj["visit_count"] + 1;
+        }
+        console.log("saving")
+        console.log(obj);
+        result[destKey] = obj;
+        console.log(result);
+        chrome.storage.local.set(result, function () {
+            console.log("Tracker saved");
+        })
     })
 }
 
@@ -51,40 +108,41 @@ adblocker.FiltersEngine.fromPrebuiltAdsAndTracking()
     })
 
 // Read domain database
-chrome.runtime.onStartup.addListener(function () {
-    // load domain database from json
-    chrome.runtime.getPackageDirectoryEntry(function (dirEntry) {
-        dirEntry.getFile(DB_PATH, undefined, function (fileEntry) {
-        fileEntry.file(function (file) {
-                var reader = new FileReader();
-                reader.addEventListener("load", function (event) {
-                    // data now in reader.result    
-                    domainDatabase = JSON.parse(reader.result);
-                });
-                reader.readAsText(file);
+chrome.runtime.getPackageDirectoryEntry(function (dirEntry) {
+    dirEntry.getFile(DB_PATH, undefined, function (fileEntry) {
+    fileEntry.file(function (file) {
+            var reader = new FileReader();
+            reader.addEventListener("load", function (event) {
+                // data now in reader.result    
+                domainDatabase = JSON.parse(reader.result);
+                console.log("Domain database loaded");
             });
-        }, function (err) {
-            console.log(err);
+            reader.readAsText(file);
         });
+    }, function (err) {
+        console.error(err);
     });
-})
+});
 
 // Set web request listener
-chrome.webRequest.onCompleted.addListener(function (details) {
+chrome.webRequest.onBeforeRequest.addListener(function (details) {
     // if engine is not loaded, do nothing
-    if (!adblockEngine) {
+    if (!adblockEngine || ! domainDatabase) {
         return;
     }
 
-
-    const sourceUrl = details.initiator;
-    const destUrl = details.url;
-    console.log(`Request: ${sourceUrl} => ${destUrl}`);
-    if (sourceUrl && isAdOrTracker(destUrl)) {
-        const sourceDomain = (new URL(sourceUrl)).hostname;
-        const destDomain = (new URL(destUrl)).hostname;
-        if (sourceDomain != destDomain) {
-            evalRequest(sourceDomain, destDomain);
+    try {
+        const sourceUrl = details.initiator;
+        const destUrl = details.url;
+        console.log(`Request: ${sourceUrl} => ${destUrl}`);
+        if (sourceUrl && isAdOrTracker(destUrl)) {
+            const sourceDomain = (new URL(sourceUrl)).hostname;
+            const destDomain = (new URL(destUrl)).hostname;
+            if (sourceDomain != destDomain) {
+                evalRequest(sourceDomain, destDomain);
+            }
         }
+    } catch (e) {
+        console.log(e)
     }
 }, {urls: ["http://*/*", "https://*/*"]})

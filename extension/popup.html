@@ -9,10 +9,11 @@
     <script type="text/javascript" src="libs/popper.min.js"></script>
     <script type="text/javascript" src="libs/bootstrap/bootstrap.min.js"></script>
     <script type="text/javascript" src="libs/psl.min.js"></script>
+    <script type="text/javascript" src="keys.js"></script>
     <script type="text/javascript" src="popup.js"></script>
   </head>
   <body>
-    <div class="container my-4 mx-2" style="width: 300px; max-height: 600px;">
+    <div class="container my-4 mx-2" style="width: 420px; max-height: 600px;">
       <div id="header" class="text-center text-dark">
         <h4 id="header-label">
           <i class="fas fa-globe"></i>
@@ -22,27 +23,31 @@
           <span id="header-count">X</span> detected
         </p>
       </div>
-      <div class="btn-group btn-group-toggle w-100" role="group" data-toggle="buttons">
-        <label class="btn btn-light active">
-          <input type="radio" name="options" id="tab0" autocomplete="off" checked> Stat1
+      <div class="btn-group btn-group-justified btn-group-toggle w-100" role="group" data-toggle="buttons">
+        <label class="btn btn-light">
+          <input type="radio" name="options" id="tab0" autocomplete="off" checked>Domain owner
         </label>
         <label class="btn btn-light">
-          <input type="radio" name="options" id="tab1" autocomplete="off"> Stat2
+          <input type="radio" name="options" id="tab1" autocomplete="off">Global reach
         </label>
         <label class="btn btn-light">
-          <input type="radio" name="options" id="tab2" autocomplete="off"> Stat3
+          <input type="radio" name="options" id="tab2" autocomplete="off"> Local reach
         </label>
       </div>
       <p class="text-secondary my-2" style="line-height: 15px;">
-        <small id="stat-desc">
-          Short explanation of this statistic. Blah blah blah this is very important.
+        <small>
+          <span id="stat-desc0">
+          Name of the tracker's owner based on domain name.
+          </span>
+          <span id="stat-desc1" class="d-none">
+          Percent of sites having tracker from the same source, based on our aggregated data.
+          </span>
+          <span id="stat-desc2" class="d-none">
+          Percent of sites having tracker from the same source, based on your current session.
+          </span>
         </small>
       </p>
       <ul id="stat-list" class="list-group list-group-flush overflow-auto pt-2">
-        <li class="list-group-item py-1">Cras justo odio</li>
-        <li class="list-group-item py-1">Dapibus ac facilisis in</li>
-        <li class="list-group-item py-1">Morbi leo risus</li>
-        <li class="list-group-item py-1">Porta ac consectetur ac</li>
       </ul>
     </div>
   </body>
