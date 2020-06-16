@@ -11,16 +11,20 @@ function onAppear() {
         console.log(`Current hostname ${hostname}, domain name: ${domain}`)
         ui_setCurrentDomain(domain);
         fetchWebsiteData(domain, function (arr) {
+            var uniqueTrackers = new Set();
             ui_setTrackerCount(arr.length);
             arr.forEach(function (item) {
                 const domain = psl.get(item);
-                fetchTrackerData(domain, function (data) {
-                    data.domain = domain;
-                    currentDomainData.push(data);
-                    console.log(`Tracker data: ${JSON.stringify(data)}`);
-                    currentDomainData = sortDomainData(currentDomainData, selectedStatIndex);
-                    ui_displayStats(currentDomainData, selectedStatIndex);
-                });
+                if (!uniqueTrackers.has(domain)) {
+                    uniqueTrackers.add(domain);
+                    fetchTrackerData(domain, function (data) {
+                        data.domain = domain;
+                        currentDomainData.push(data);
+                        console.log(`Tracker data: ${JSON.stringify(data)}`);
+                        currentDomainData = sortDomainData(currentDomainData, selectedStatIndex);
+                        ui_displayStats(currentDomainData, selectedStatIndex);
+                    });
+                }
             });
         })
     });
